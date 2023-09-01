@@ -5,7 +5,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import * as auth from "../utils/auth.js";
 
-export default function Login({ handleLogin }) {
+export default function Login({ onLogin }) {
   const [formValue, setFormValue] = React.useState({
     email: "",
     password: "",
@@ -33,7 +33,7 @@ export default function Login({ handleLogin }) {
         if (data.token) {
           setFormValue({ email: "", password: "" });
           //изменяем стейт isLoggedIn на true
-          handleLogin();
+          onLogin();
           navigate("/", { replace: true });
         }
       })

@@ -2,10 +2,12 @@ import logoWhite from "../images/header-logo-white.svg";
 import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 
-function Header({ buttonName, usersEmail, buttonSignOut }) {
+function Header({ buttonName, usersEmail, buttonSignOut, setUsersEmail }) {
   const navigate = useNavigate();
   function onSignOut() {
     localStorage.removeItem("token");
+    //обнуляем значение usersEmail
+    setUsersEmail(null);
     navigate("/sign-in", { replace: true });
   }
 

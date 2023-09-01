@@ -1,13 +1,11 @@
 export default function WelcomeForm({
   title,
   buttonName,
-  isLoggedIn,
   handleSubmit,
   formValue,
   handleChange,
   onRegister,
 }) {
-
   return (
     <form onSubmit={handleSubmit} className="welcomeform">
       <div className="welcomeform__title">{title}</div>

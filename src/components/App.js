@@ -92,7 +92,7 @@ function App() {
   //функция проверки токена
   React.useEffect(() => {
     tokenCheck();
-  }, []);
+  }, [isLoggedIn]);
 
   function tokenCheck() {
     // если у пользователя есть токен в localStorage,
@@ -295,7 +295,11 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   element={
                     <>
-                      <Header buttonSignOut="Выйти" usersEmail={usersEmail} />
+                      <Header
+                        buttonSignOut="Выйти"
+                        usersEmail={usersEmail}
+                        setUsersEmail={setUsersEmail}
+                      />
                       <Main
                         onEditProfile={handleEditProfileClick}
                         onEditAvatar={handleEditAvatarClick}
@@ -323,16 +327,7 @@ function App() {
               }
             />
 
-            <Route
-              path="/sign-in"
-              element={
-                <Login
-                  handleLogin={handleLogin}
-                  isLoggedIn={isLoggedIn}
-                  usersEmail={usersEmail}
-                />
-              }
-            />
+            <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
           </Routes>
 
           <EditProfilePopup
