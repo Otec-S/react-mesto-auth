@@ -32,7 +32,7 @@ export default function Login({ handleLogin }) {
       .then((data) => {
         if (data.token) {
           setFormValue({ email: "", password: "" });
-          //изменяем стейт LoggedIn на true
+          //изменяем стейт isLoggedIn на true
           handleLogin();
           navigate("/", { replace: true });
         }

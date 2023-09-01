@@ -36,8 +36,8 @@ function App() {
   //устанавливаем переменную состояние <cards> (список карточек)
   const [cards, setCards] = React.useState([]);
 
-  //переменная состояния для данных о регистрации пользователя
-  const [loggedIn, setloggedIn] = React.useState(false);
+  //переменная состояния для данных о залогинивании пользователя
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   //переменная для отслеживания состояния загрузки
   const [isLoading, setIsLoading] = React.useState(false);
@@ -82,17 +82,15 @@ function App() {
   function handleRegister() {
     setIsRegistered(true);
   }
+  //меняем isLoggedIn на true
+  function handleLogin() {
+    setIsLoggedIn(true);
+  }
 
   //ФУНКЦИИ
 
-  //функция устанавливает значение loggedIn на true
-  function handleLogin() {
-    setloggedIn(true);
-  }
-
   //функция проверки токена
   React.useEffect(() => {
-    // настало время проверить токен
     tokenCheck();
   }, []);
 
@@ -116,28 +114,29 @@ function App() {
     }
   }
 
-  //эффект при монтировании для currentUser
+  //эффект при монтировании для currentUser и для получения карточек с сервера
   React.useEffect(() => {
-    //получаем данные о пользователе с сервера
-    api
-      .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch(console.error);
-  }, []);
+    //только если пользователь залогирован
+    if (isLoggedIn) {
+      //получаем данные о пользователе с сервера
 
-  //эффект для получения карточек с сервера
-  React.useEffect(() => {
-    // получаем данные об изначальном массиве карточек с сервера
-    api
-      .getCards()
-      .then((res) => {
-        //присваиваем переменной cards массив полученных с сервера объектов карточек
-        setCards(res);
-      })
-      .catch(console.error);
-  }, []);
+      api
+        .getUserInfo()
+        .then((res) => {
+          setCurrentUser(res);
+        })
+        .catch(console.error);
+
+      // получаем данные об изначальном массиве карточек с сервера
+      api
+        .getCards()
+        .then((res) => {
+          //присваиваем переменной cards массив полученных с сервера объектов карточек
+          setCards(res);
+        })
+        .catch(console.error);
+    }
+  }, [isLoggedIn]);
 
   //функция проставления и убирания лайков
   function handleCardLike(card) {
@@ -281,7 +280,7 @@ function App() {
             <Route
               path="*"
               element={
-                loggedIn ? (
+                isLoggedIn ? (
                   <Navigate to="/" replace />
                 ) : (
                   <Navigate to="/sign-in" replace />
@@ -293,7 +292,7 @@ function App() {
               path="/"
               element={
                 <ProtectedRouteElement
-                  loggedIn={loggedIn}
+                  isLoggedIn={isLoggedIn}
                   element={
                     <>
                       <Header buttonSignOut="Выйти" usersEmail={usersEmail} />
@@ -329,7 +328,7 @@ function App() {
               element={
                 <Login
                   handleLogin={handleLogin}
-                  loggedIn={loggedIn}
+                  isLoggedIn={isLoggedIn}
                   usersEmail={usersEmail}
                 />
               }
@@ -351,7 +350,15 @@ function App() {
             onAddPlace={handleAddPlaceSubmit}
           />
 
-          <InfoTooltip isOpen={isInfoTooltipOpen} isRegistered={isRegistered} />
+          <InfoTooltip
+            isOpen={isInfoTooltipOpen}
+            isRegistered={isRegistered}
+            text={
+              isRegistered
+                ? "Вы успешно зарегистрировались!"
+                : "Что-то пошло не так! Попробуйте ещё раз."
+            }
+          />
 
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </CurrentUserContext.Provider>

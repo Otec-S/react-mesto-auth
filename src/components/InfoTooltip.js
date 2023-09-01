@@ -4,7 +4,7 @@ import cross from "../images/Registration-cross.svg";
 
 import { AppContext } from "../contexts/AppContext.js";
 
-export default function InfoTooltip({ isOpen, isRegistered }) {
+export default function InfoTooltip({ isOpen, isRegistered, text }) {
   //подписка на контекст
   const { closeAllPopups } = React.useContext(AppContext);
 
@@ -25,9 +25,7 @@ export default function InfoTooltip({ isOpen, isRegistered }) {
                 alt="Галочка успешной регистрации"
                 className="popup__registration_sign"
               />
-              <div className="popup__registration_text">
-                Вы успешно зарегистрировались!
-              </div>
+              <div className="popup__registration_text">{text}</div>
             </>
           ) : (
             <>
@@ -36,9 +34,7 @@ export default function InfoTooltip({ isOpen, isRegistered }) {
                 alt="Крестик неуспешной регистрации"
                 className="popup__registration_sign"
               />
-              <div className="popup__registration_text">
-                Что-то пошло не так! Попробуйте ещё раз.
-              </div>
+              <div className="popup__registration_text">{text}</div>
             </>
           )}
         </div>

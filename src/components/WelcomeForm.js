@@ -1,7 +1,7 @@
 export default function WelcomeForm({
   title,
   buttonName,
-  loggedIn,
+  isLoggedIn,
   handleSubmit,
   formValue,
   handleChange,
@@ -19,7 +19,7 @@ export default function WelcomeForm({
         value={formValue.email}
         className="welcomeform__input"
         required
-        autoComplete="off"
+        // autoComplete="off"
         placeholder="Email"
         onChange={handleChange}
       />
