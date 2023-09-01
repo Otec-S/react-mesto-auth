@@ -92,7 +92,7 @@ function App() {
   //функция проверки токена
   React.useEffect(() => {
     tokenCheck();
-  }, [isLoggedIn]);
+  }, [isLoggedIn, usersEmail]);
 
   function tokenCheck() {
     // если у пользователя есть токен в localStorage,
