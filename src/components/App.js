@@ -106,6 +106,7 @@ function App() {
           if (res) {
             // авторизуем пользователя
             handleLogin();
+            setUsersEmail(res.data.email);
             navigate("/", { replace: true });
           }
         })
