@@ -27,11 +27,12 @@ export default function Login({ onLogin, setUsersEmail }) {
     if (!formValue.email || !formValue.password) {
       return;
     }
-    //ловим значение email пользователя при логировании и устанавливаем в стейт, полученный через пропс
-    setUsersEmail(formValue.email);
+
     auth
       .authorize(formValue.email, formValue.password)
       .then((data) => {
+        //ловим значение email пользователя при логировании и устанавливаем в стейт, полученный через пропс
+        setUsersEmail(formValue.email);
         if (data.token) {
           setFormValue({ email: "", password: "" });
           //изменяем стейт isLoggedIn на true
