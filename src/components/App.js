@@ -92,7 +92,7 @@ function App() {
   //функция проверки токена
   React.useEffect(() => {
     tokenCheck();
-  }, [isLoggedIn, usersEmail]);
+  }, []);
 
   function tokenCheck() {
     // если у пользователя есть токен в localStorage,
@@ -106,7 +106,6 @@ function App() {
           if (res) {
             // авторизуем пользователя
             handleLogin();
-            setUsersEmail(res.data.email);
             navigate("/", { replace: true });
           }
         })
@@ -295,11 +294,7 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   element={
                     <>
-                      <Header
-                        buttonSignOut="Выйти"
-                        usersEmail={usersEmail}
-                        setUsersEmail={setUsersEmail}
-                      />
+                      <Header buttonSignOut="Выйти" usersEmail={usersEmail} />
                       <Main
                         onEditProfile={handleEditProfileClick}
                         onEditAvatar={handleEditAvatarClick}
@@ -327,7 +322,12 @@ function App() {
               }
             />
 
-            <Route path="/sign-in" element={<Login onLogin={handleLogin} />} />
+            <Route
+              path="/sign-in"
+              element={
+                <Login onLogin={handleLogin} setUsersEmail={setUsersEmail} />
+              }
+            />
           </Routes>
 
           <EditProfilePopup

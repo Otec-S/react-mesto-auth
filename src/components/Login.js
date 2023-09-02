@@ -5,7 +5,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import * as auth from "../utils/auth.js";
 
-export default function Login({ onLogin }) {
+export default function Login({ onLogin, setUsersEmail }) {
   const [formValue, setFormValue] = React.useState({
     email: "",
     password: "",
@@ -27,6 +27,8 @@ export default function Login({ onLogin }) {
     if (!formValue.email || !formValue.password) {
       return;
     }
+    //ловим значение email пользователя при логировании и устанавливаем в стейт, полученный через пропс
+    setUsersEmail(formValue.email);
     auth
       .authorize(formValue.email, formValue.password)
       .then((data) => {
