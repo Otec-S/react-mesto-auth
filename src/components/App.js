@@ -156,6 +156,7 @@ function App() {
       api
         .putLike(card._id)
         .then((newCard) => {
+          console.log('newCard:', newCard);
           changeLikes(newCard);
         })
         .catch(console.error);
